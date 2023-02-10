@@ -11,6 +11,8 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = CustomTheme.of(context);
 
+    final items = List<String>.generate(20, (i) => 'Item ${i + 1}');
+
     return Scaffold(
       backgroundColor: theme.background,
       appBar: PreferredSize(
@@ -30,7 +32,8 @@ class Home extends StatelessWidget {
               const SizedBox(height: 24),
             ],
           )),
-      body: ListView.builder(itemBuilder: (context, index) => const Task()),
+      body: ListView.builder(
+          itemCount: items.length, itemBuilder: (items, index) => const Task()),
       floatingActionButton: FloatingActionButton(
         backgroundColor: theme.brand,
         onPressed: () {},

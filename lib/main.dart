@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_theme/flutter_custom_theme.dart';
+import 'package:innova_app/pages/home.dart';
 import 'package:innova_app/theme/custom_theme.dart';
 import 'package:innova_app/theme/theme_notifier.dart';
 import 'package:provider/provider.dart';
@@ -7,7 +8,7 @@ import 'package:provider/provider.dart';
 void main() {
   runApp(ChangeNotifierProvider(
     create: (BuildContext context) {
-      return ThemeNotifier(false);
+      return ThemeNotifier(true);
     },
     child: const MyApp(),
   ));
@@ -23,6 +24,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
+    final theme = CustomTheme.of(context);
     final themeNofifier = Provider.of<ThemeNotifier>(context);
 
     return CustomThemes(
@@ -32,43 +34,31 @@ class _MyAppState extends State<MyApp> {
               : const CustomTheme.light()
         ],
         child: const MaterialApp(
-          title: 'Theme',
-          debugShowCheckedModeBanner: false,
-          home: Home(),
-        ));
+            title: 'Theme', debugShowCheckedModeBanner: false, home: Home()));
   }
 }
 
-class Home extends StatelessWidget {
-  const Home({super.key});
+// class Home extends StatelessWidget {
+//   const Home({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    final theme = CustomTheme.of(context);
-    final themeNofifier = Provider.of<ThemeNotifier>(context);
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          TextButton(
-              onPressed: () {
-                themeNofifier.setTheme(!themeNofifier.getTheme());
-              },
-              child: Text('teste'))
-        ],
-        backgroundColor: theme.container,
-        title: DefaultTextStyle(
-            style: TextStyle(color: theme.primary),
-            child: const Text('App Bar')),
-      ),
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        color: theme.background,
-        child: Center(
-          child: DefaultTextStyle(
-              style: TextStyle(color: theme.brand), child: const Text('Body')),
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     // final theme = CustomTheme.of(context);
+//     // final themeNofifier = Provider.of<ThemeNotifier>(context);
+//     return const Scaffold(
+//         // appBar: AppBar(
+//         //   actions: [
+//         //     TextButton(
+//         //         onPressed: () {
+//         //           themeNofifier.setTheme(!themeNofifier.getTheme());
+//         //         },
+//         //         child: Text('teste'))
+//         //   ],
+//         //   backgroundColor: theme.container,
+//         //   title: DefaultTextStyle(
+//         //       style: TextStyle(color: theme.primary),
+//         //       child: const Text('App Bar')),
+//         // ),
+//         body: Home());
+//   }
+// }

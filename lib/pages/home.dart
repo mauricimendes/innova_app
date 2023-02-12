@@ -5,9 +5,15 @@ import 'package:innova_app/components/header.dart';
 import 'package:innova_app/components/task.dart';
 import 'package:innova_app/theme/custom_theme.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
 
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     final theme = CustomTheme.of(context);
@@ -23,11 +29,16 @@ class Home extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  margin: const EdgeInsets.only(top: 16),
-                  padding: const EdgeInsets.only(
-                      left: 24, top: 36, right: 24, bottom: 36),
-                  child: const Header(),
-                ),
+                    margin: const EdgeInsets.only(top: 16),
+                    padding: const EdgeInsets.only(
+                        left: 24, top: 36, right: 24, bottom: 36),
+                    child: Builder(builder: (context) {
+                      return Header(
+                        openDrawer: () {
+                          Scaffold.of(context).openDrawer();
+                        },
+                      );
+                    })),
                 const Padding(
                     padding: EdgeInsets.only(left: 24), child: Filter()),
                 const SizedBox(height: 24),
@@ -45,6 +56,6 @@ class Home extends StatelessWidget {
             color: theme.secondary,
           ),
         ),
-        drawer: DrawerApp());
+        drawer: const DrawerApp());
   }
 }

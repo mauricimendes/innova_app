@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:innova_app/theme/custom_theme.dart';
 
 class Header extends StatelessWidget {
-  const Header({super.key});
+  final Function openDrawer;
+  const Header({super.key, required this.openDrawer});
 
   @override
   Widget build(BuildContext context) {
@@ -13,16 +14,21 @@ class Header extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Ink(
-            child: Container(
           height: 52,
           width: 52,
           decoration: BoxDecoration(
               color: theme.container, borderRadius: BorderRadius.circular(8)),
-          child: Icon(
-            Icons.logout,
-            color: theme.secondary,
+          child: InkWell(
+            onTap: () {
+              openDrawer();
+            },
+            borderRadius: BorderRadius.circular(8),
+            child: Icon(
+              Icons.menu,
+              color: theme.secondary,
+            ),
           ),
-        )),
+        ),
         DefaultTextStyle(
             style: TextStyle(
                 color: theme.primary,
@@ -30,16 +36,19 @@ class Header extends StatelessWidget {
                 fontWeight: FontWeight.bold),
             child: const Text('Tarefas de hoje')),
         Ink(
-            decoration: BoxDecoration(
-                color: theme.container, borderRadius: BorderRadius.circular(8)),
-            child: SizedBox(
-              height: 52,
-              width: 52,
-              child: Icon(
-                Icons.people,
-                color: theme.brand,
-              ),
-            )),
+          height: 52,
+          width: 52,
+          decoration: BoxDecoration(
+              color: theme.container, borderRadius: BorderRadius.circular(8)),
+          child: InkWell(
+            onTap: () {},
+            borderRadius: BorderRadius.circular(8),
+            child: Icon(
+              Icons.logout,
+              color: theme.secondary,
+            ),
+          ),
+        ),
       ],
     );
   }

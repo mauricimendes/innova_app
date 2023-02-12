@@ -67,6 +67,7 @@ class _TaskState extends State<Task> {
           width: double.infinity,
           duration: const Duration(milliseconds: 200),
           child: InkWell(
+            borderRadius: BorderRadius.circular(8),
             onDoubleTap: handleOpenTask,
             onLongPress: () => handleSetChecked(),
             child: Column(

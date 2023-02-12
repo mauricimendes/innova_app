@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:innova_app/components/drawer.dart';
 import 'package:innova_app/components/filter.dart';
 import 'package:innova_app/components/header.dart';
 import 'package:innova_app/components/task.dart';
@@ -14,35 +15,36 @@ class Home extends StatelessWidget {
     final items = List<String>.generate(20, (i) => 'Item ${i + 1}');
 
     return Scaffold(
-      backgroundColor: theme.background,
-      appBar: PreferredSize(
-          preferredSize: const Size(double.infinity, 174),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
-                margin: const EdgeInsets.only(top: 16),
-                padding: const EdgeInsets.only(
-                    left: 24, top: 36, right: 24, bottom: 36),
-                child: const Header(),
-              ),
-              const Padding(
-                  padding: EdgeInsets.only(left: 24), child: Filter()),
-              const SizedBox(height: 24),
-            ],
-          )),
-      body: ListView.builder(
-          itemCount: items.length, itemBuilder: (items, index) => const Task()),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: theme.brand,
-        onPressed: () {},
-        child: Icon(
-          Icons.add,
-          size: 24,
-          color: theme.secondary,
+        backgroundColor: theme.background,
+        appBar: PreferredSize(
+            preferredSize: const Size(double.infinity, 174),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(top: 16),
+                  padding: const EdgeInsets.only(
+                      left: 24, top: 36, right: 24, bottom: 36),
+                  child: const Header(),
+                ),
+                const Padding(
+                    padding: EdgeInsets.only(left: 24), child: Filter()),
+                const SizedBox(height: 24),
+              ],
+            )),
+        body: ListView.builder(
+            itemCount: items.length,
+            itemBuilder: (items, index) => const Task()),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: theme.brand,
+          onPressed: () {},
+          child: Icon(
+            Icons.add,
+            size: 24,
+            color: theme.secondary,
+          ),
         ),
-      ),
-    );
+        drawer: DrawerApp());
   }
 }

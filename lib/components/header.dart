@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:innova_app/theme/custom_theme.dart';
-import 'package:innova_app/theme/theme_notifier.dart';
-import 'package:provider/provider.dart';
 
 class Header extends StatelessWidget {
   const Header({super.key});
@@ -9,7 +7,6 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = CustomTheme.of(context);
-    final themeNofifier = Provider.of<ThemeNotifier>(context);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -35,17 +32,12 @@ class Header extends StatelessWidget {
         Ink(
             decoration: BoxDecoration(
                 color: theme.container, borderRadius: BorderRadius.circular(8)),
-            child: InkWell(
-              onTap: () {
-                themeNofifier.setTheme(!themeNofifier.getTheme());
-              },
-              child: Container(
-                height: 52,
-                width: 52,
-                child: Icon(
-                  Icons.people,
-                  color: theme.brand,
-                ),
+            child: SizedBox(
+              height: 52,
+              width: 52,
+              child: Icon(
+                Icons.people,
+                color: theme.brand,
               ),
             )),
       ],

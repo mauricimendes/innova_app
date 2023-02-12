@@ -25,6 +25,7 @@ class _TaskState extends State<Task> {
     setState(() {
       _sizeTask = _sizeTask == sizeOpenTask ? 62 : sizeOpenTask;
     });
+
     Future.delayed(const Duration(milliseconds: 200), () {
       setState(() {
         _open = !_open;

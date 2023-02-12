@@ -6,14 +6,14 @@ class CustomTheme extends CustomThemeData {
       mainDefault: const CustomTheme.light(),
       darkDefault: const CustomTheme.dark());
 
-  final Color? brand;
-  final Color? container;
-  final Color? background;
-  final Color? primary;
-  final Color? secondary;
-  final Color? green;
-  final Color? orange;
-  final Color? red;
+  final Color brand;
+  final Color container;
+  final Color background;
+  final Color primary;
+  final Color secondary;
+  final Color green;
+  final Color orange;
+  final Color red;
 
   const CustomTheme.light(
       {this.brand = const Color(0xFF36479E),

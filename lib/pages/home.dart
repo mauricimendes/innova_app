@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:innova_app/components/drawer.dart';
 import 'package:innova_app/components/filter.dart';
+import 'package:innova_app/components/form_create_task.dart';
 import 'package:innova_app/components/header.dart';
 import 'package:innova_app/components/task.dart';
 import 'package:innova_app/theme/custom_theme.dart';
@@ -49,7 +50,13 @@ class _HomeState extends State<Home> {
             itemBuilder: (items, index) => const Task()),
         floatingActionButton: FloatingActionButton(
           backgroundColor: theme.brand,
-          onPressed: () {},
+          onPressed: () {
+            showModalBottomSheet(
+                context: context,
+                builder: (context) {
+                  return const FormCreateTask();
+                });
+          },
           child: Icon(
             Icons.add,
             size: 24,

@@ -52,9 +52,16 @@ class _HomeState extends State<Home> {
           backgroundColor: theme.brand,
           onPressed: () {
             showModalBottomSheet(
+                isScrollControlled: true,
                 context: context,
                 builder: (context) {
-                  return const FormCreateTask();
+                  return SingleChildScrollView(
+                    child: Container(
+                      padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).viewInsets.bottom),
+                      child: const FormCreateTask(),
+                    ),
+                  );
                 });
           },
           child: Icon(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:innova_app/theme/app_images.dart';
 import 'package:innova_app/theme/custom_theme.dart';
 import 'package:innova_app/theme/theme_notifier.dart';
 import 'package:provider/provider.dart';
@@ -28,27 +29,42 @@ class _DrawerAppState extends State<DrawerApp> {
             decoration: BoxDecoration(color: theme.brand),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
-                    height: 56,
-                    width: 56,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(28),
-                        color: theme.container),
-                    child: Icon(Icons.people)),
-                DefaultTextStyle(
-                    style: TextStyle(
-                        color: theme.secondary,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500),
-                    child: Text('Bem-vindo')),
-                DefaultTextStyle(
-                    style: TextStyle(
-                        color: theme.primary,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold),
-                    child: Text('Maurici Mendes Júnior'))
+                Image.asset(
+                  themeNofifier.getTheme()
+                      ? AppImages.logoDark
+                      : AppImages.logoLight,
+                  height: 24,
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                          height: 56,
+                          width: 56,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(28),
+                              color: theme.container),
+                          child: const Icon(Icons.people)),
+                      DefaultTextStyle(
+                          style: TextStyle(
+                              color: theme.secondary,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500),
+                          child: const Text('Bem-vindo')),
+                      DefaultTextStyle(
+                          style: TextStyle(
+                              color: theme.primary,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold),
+                          child: Text('Maurici Mendes Júnior'))
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

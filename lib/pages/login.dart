@@ -43,7 +43,7 @@ class Login extends StatelessWidget {
                       child: InkWell(
                         borderRadius: BorderRadius.circular(8),
                         onTap: () {
-                          print('teste');
+                          Navigator.pushNamed(context, '/home');
                         },
                         child: Row(
                           children: [

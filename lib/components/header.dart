@@ -41,7 +41,9 @@ class Header extends StatelessWidget {
           decoration: BoxDecoration(
               color: theme.container, borderRadius: BorderRadius.circular(8)),
           child: InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, '/login');
+            },
             borderRadius: BorderRadius.circular(8),
             child: Icon(
               Icons.logout,

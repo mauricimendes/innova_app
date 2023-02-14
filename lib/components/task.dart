@@ -58,7 +58,7 @@ class _TaskState extends State<Task> {
           ),
         ),
         direction: DismissDirection.endToStart,
-        onDismissed: (direction) => {print('teste')},
+        onDismissed: (direction) => {},
         key: Key(''),
         child: AnimatedContainer(
           decoration: BoxDecoration(

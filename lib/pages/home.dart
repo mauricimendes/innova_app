@@ -24,7 +24,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
         backgroundColor: theme.background,
         appBar: PreferredSize(
-            preferredSize: const Size(double.infinity, 174),
+            preferredSize: const Size(double.infinity, 182),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,

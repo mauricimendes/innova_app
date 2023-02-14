@@ -22,31 +22,54 @@ class _DrawerAppState extends State<DrawerApp> {
 
     return Drawer(
       backgroundColor: theme.background,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 56),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              decoration: BoxDecoration(color: theme.container),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Switch(
-                    activeColor: theme.green,
-                    value: themeNofifier.getTheme(),
-                    onChanged: (bool value) => {handleChangleTheme(value)},
-                  ),
-                  DefaultTextStyle(
-                      style: TextStyle(color: theme.primary, fontSize: 16),
-                      child: const Text('Dark Mode'))
-                ],
-              ),
-            )
-          ],
-        ),
+      child: ListView(
+        children: [
+          DrawerHeader(
+            decoration: BoxDecoration(color: theme.brand),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                    height: 56,
+                    width: 56,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(28),
+                        color: theme.container),
+                    child: Icon(Icons.people)),
+                DefaultTextStyle(
+                    style: TextStyle(
+                        color: theme.secondary,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500),
+                    child: Text('Bem-vindo')),
+                DefaultTextStyle(
+                    style: TextStyle(
+                        color: theme.primary,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
+                    child: Text('Maurici Mendes Júnior'))
+              ],
+            ),
+          ),
+          Container(
+            decoration: BoxDecoration(color: theme.container),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Switch(
+                  activeColor: theme.green,
+                  value: themeNofifier.getTheme(),
+                  onChanged: (bool value) => {handleChangleTheme(value)},
+                ),
+                DefaultTextStyle(
+                    style: TextStyle(color: theme.primary, fontSize: 16),
+                    child: const Text('Dark Mode'))
+              ],
+            ),
+          )
+        ],
       ),
     );
   }

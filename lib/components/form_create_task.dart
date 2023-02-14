@@ -22,9 +22,11 @@ class FormCreateTask extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              height: 3,
+              height: 4,
               width: 36,
-              color: theme.secondary,
+              decoration: BoxDecoration(
+                  color: theme.secondary,
+                  borderRadius: BorderRadius.circular(2)),
             ),
             const SizedBox(
               height: 24,

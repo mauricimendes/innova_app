@@ -5,14 +5,28 @@ import 'package:innova_app/components/form_create_task.dart';
 import 'package:innova_app/components/header.dart';
 import 'package:innova_app/components/task.dart';
 import 'package:innova_app/theme/custom_theme.dart';
+import 'package:innova_app/pages/modules/task.dart';
+import 'package:dio/dio.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  late Future<List<ITask>> tasks;
+
+  @override
+  void initState() {
+    super.initState();
+    tasks = getTasks();
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = CustomTheme.of(context);
-
     final items = List<String>.generate(20, (i) => 'Item ${i + 1}');
 
     return Scaffold(
@@ -65,5 +79,20 @@ class Home extends StatelessWidget {
           ),
         ),
         drawer: const DrawerApp());
+  }
+
+  Future<List<ITask>> getTasks() async {
+    final api = Dio();
+    final response = await api.get(
+        'http://localhost:3000/tasks/mauricimendes.14@gmail.com',
+        queryParameters: {
+          'date': DateTime.now(),
+        });
+
+    final list =
+        (response.data as List).map((task) => ITask.fromJson(task)).toList();
+
+    print(list);
+    return list;
   }
 }

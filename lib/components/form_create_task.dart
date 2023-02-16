@@ -12,10 +12,24 @@ class FormCreateTask extends StatefulWidget {
 
 class _FormCreateTaskState extends State<FormCreateTask> {
   late String difficulty;
+  late String title;
+  late String description;
 
   void handleChangeDifficulty(String value) {
     setState(() {
       difficulty = value;
+    });
+  }
+
+  void handleChangeTitle(String value) {
+    setState(() {
+      title = value;
+    });
+  }
+
+  void handleChangeDescription(String value) {
+    setState(() {
+      description = value;
     });
   }
 
@@ -43,15 +57,17 @@ class _FormCreateTaskState extends State<FormCreateTask> {
             const SizedBox(
               height: 24,
             ),
-            const InputApp(
+            InputApp(
               placeholder: 'Título',
+              handleChangeText: (value) => handleChangeTitle(value),
             ),
             const SizedBox(
               height: 16,
             ),
-            const InputApp(
+            InputApp(
               placeholder: 'Descrição',
               textArea: true,
+              handleChangeText: (value) => handleChangeDescription(value),
             ),
             const SizedBox(
               height: 16,

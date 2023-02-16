@@ -19,6 +19,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   late Future<List<ITask>> tasks;
   late String? difficultyState = 'all';
+  late DateTime date = DateTime.now();
 
   @override
   void initState() {
@@ -32,10 +33,34 @@ class _HomeState extends State<Home> {
     });
   }
 
+  void nextDay() {
+    final DateTime newDate = date.add(const Duration(days: 1));
+    setState(() {
+      date = newDate;
+    });
+    newTasks();
+  }
+
+  void previousDay() {
+    final DateTime newDate = date.add(const Duration(days: -1));
+    setState(() {
+      date = newDate;
+    });
+    newTasks();
+  }
+
+  String dateTitle() {
+    final today = DateFormat("yyyy-MM-dd").format(DateTime.now());
+    if (today == DateFormat("yyyy-MM-dd").format(date)) {
+      return 'Tarefas de hoje';
+    } else {
+      return DateFormat("dd/MM/yyyy").format(date);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = CustomTheme.of(context);
-
     return Scaffold(
         backgroundColor: theme.background,
         appBar: PreferredSize(
@@ -50,6 +75,9 @@ class _HomeState extends State<Home> {
                         left: 24, top: 36, right: 24, bottom: 36),
                     child: Builder(builder: (context) {
                       return Header(
+                        date: dateTitle(),
+                        handleNextDay: () => nextDay(),
+                        handlePreviousDay: () => previousDay(),
                         openDrawer: () {
                           Scaffold.of(context).openDrawer();
                         },
@@ -75,7 +103,7 @@ class _HomeState extends State<Home> {
         body: FutureBuilder<List<ITask>>(
             future: tasks,
             builder: (context, mytasks) {
-              if (mytasks.hasData) {
+              if (mytasks.hasData && mytasks.data!.isNotEmpty) {
                 return ListView.builder(
                     itemCount: mytasks.data!.length,
                     itemBuilder: (items, index) {
@@ -109,7 +137,7 @@ class _HomeState extends State<Home> {
                             color: theme.secondary,
                             fontSize: 16,
                             fontWeight: FontWeight.bold),
-                        child: const Text('Não há tasks')));
+                        child: const Text('Não há tarefas')));
               }
             }),
         floatingActionButton: FloatingActionButton(
@@ -139,8 +167,7 @@ class _HomeState extends State<Home> {
 
   Future<List<ITask>> getTasks() async {
     final api = Dio();
-    var now = DateTime.now();
-    var dateFormatted = DateFormat("yyyy-MM-ddTHH:mm:ss").format(now);
+    var dateFormatted = DateFormat("yyyy-MM-ddTHH:mm:ss").format(date);
 
     final response = await api.get('http://192.168.100.7:3000/tasks',
         queryParameters: {

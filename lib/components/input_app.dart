@@ -4,7 +4,12 @@ import 'package:innova_app/theme/custom_theme.dart';
 class InputApp extends StatelessWidget {
   final String placeholder;
   final bool? textArea;
-  const InputApp({super.key, this.textArea = false, required this.placeholder});
+  final Function(String) handleChangeText;
+  const InputApp(
+      {super.key,
+      this.textArea = false,
+      required this.placeholder,
+      required this.handleChangeText});
 
   @override
   Widget build(BuildContext context) {
@@ -12,6 +17,7 @@ class InputApp extends StatelessWidget {
 
     return TextField(
       maxLines: textArea! ? 3 : 1,
+      onChanged: (value) => {print(value)},
       obscureText: false,
       style: TextStyle(color: theme.primary),
       textCapitalization: TextCapitalization.sentences,

@@ -4,15 +4,18 @@ part 'task.g.dart';
 
 @JsonSerializable()
 class ITask {
-  final String title, description, email, difficulty;
-  final DateTime date;
+  final String? id, title, description, email, difficulty;
+  final DateTime? date;
+  final bool? checked;
 
   ITask(
-      {required this.title,
-      required this.description,
-      required this.email,
-      required this.date,
-      required this.difficulty});
+      {this.id,
+      this.title,
+      this.description,
+      this.checked,
+      this.email,
+      this.date,
+      this.difficulty});
 
   factory ITask.fromJson(Map<String, dynamic> json) => _$ITaskFromJson(json);
 

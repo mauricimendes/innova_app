@@ -28,8 +28,8 @@ class _DrawerAppState extends State<DrawerApp> {
           DrawerHeader(
             decoration: BoxDecoration(color: theme.brand),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Image.asset(
                   themeNofifier.getTheme()
@@ -43,13 +43,6 @@ class _DrawerAppState extends State<DrawerApp> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                          height: 56,
-                          width: 56,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(28),
-                              color: theme.container),
-                          child: const Icon(Icons.people)),
                       DefaultTextStyle(
                           style: TextStyle(
                               color: theme.secondary,
@@ -61,7 +54,7 @@ class _DrawerAppState extends State<DrawerApp> {
                               color: theme.primary,
                               fontSize: 16,
                               fontWeight: FontWeight.bold),
-                          child: Text('Maurici Mendes Júnior'))
+                          child: Text('Ao MyTasks'))
                     ],
                   ),
                 ),

@@ -7,6 +7,7 @@ import 'package:innova_app/components/task.dart';
 import 'package:innova_app/theme/custom_theme.dart';
 import 'package:innova_app/pages/modules/task.dart';
 import 'package:dio/dio.dart';
+import 'package:intl/intl.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -17,6 +18,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   late Future<List<ITask>> tasks;
+  late String? difficultyState = 'all';
 
   @override
   void initState() {
@@ -24,10 +26,15 @@ class _HomeState extends State<Home> {
     tasks = getTasks();
   }
 
+  void newTasks() {
+    setState(() {
+      tasks = getTasks();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = CustomTheme.of(context);
-    final items = List<String>.generate(20, (i) => 'Item ${i + 1}');
 
     return Scaffold(
         backgroundColor: theme.background,
@@ -48,14 +55,63 @@ class _HomeState extends State<Home> {
                         },
                       );
                     })),
-                const Padding(
-                    padding: EdgeInsets.only(left: 24), child: Filter()),
+                Padding(
+                    padding: const EdgeInsets.only(left: 24),
+                    child: Filter(
+                      handleChangeDifficulty: (difficulty) {
+                        setState(() {
+                          if (difficultyState == difficulty) {
+                            difficultyState = 'all';
+                          } else {
+                            difficultyState = difficulty;
+                          }
+                        });
+                        newTasks();
+                      },
+                    )),
                 const SizedBox(height: 24),
               ],
             )),
-        body: ListView.builder(
-            itemCount: items.length,
-            itemBuilder: (items, index) => const Task()),
+        body: FutureBuilder<List<ITask>>(
+            future: tasks,
+            builder: (context, mytasks) {
+              if (mytasks.hasData) {
+                return ListView.builder(
+                    itemCount: mytasks.data!.length,
+                    itemBuilder: (items, index) {
+                      ITask task = mytasks.data![index];
+                      return Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 8),
+                        child: Task(
+                          handleDeleteTask: () {
+                            deleteTask(task.id ?? '');
+                            setState(() {
+                              late List<ITask> list = tasks as List<ITask>;
+                              list.removeWhere((item) => item.id == task.id);
+                              setState(() {
+                                tasks = list as Future<List<ITask>>;
+                              });
+                            });
+                          },
+                          handleCheckedTask: () => checkedTaks(task.id ?? ''),
+                          title: task.title ?? '',
+                          checked: task.checked ?? false,
+                          description: task.description ?? '',
+                          difficulty: task.difficulty ?? '',
+                        ),
+                      );
+                    });
+              } else {
+                return Center(
+                    child: DefaultTextStyle(
+                        style: TextStyle(
+                            color: theme.secondary,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
+                        child: const Text('Não há tasks')));
+              }
+            }),
         floatingActionButton: FloatingActionButton(
           backgroundColor: theme.brand,
           onPressed: () {
@@ -83,16 +139,29 @@ class _HomeState extends State<Home> {
 
   Future<List<ITask>> getTasks() async {
     final api = Dio();
-    final response = await api.get(
-        'http://localhost:3000/tasks/mauricimendes.14@gmail.com',
+    var now = DateTime.now();
+    var dateFormatted = DateFormat("yyyy-MM-ddTHH:mm:ss").format(now);
+
+    final response = await api.get('http://192.168.100.7:3000/tasks',
         queryParameters: {
-          'date': DateTime.now(),
+          'date': dateFormatted,
+          'difficulty': difficultyState
         });
 
     final list =
         (response.data as List).map((task) => ITask.fromJson(task)).toList();
 
-    print(list);
     return list;
+  }
+
+  void checkedTaks(String id) async {
+    final api = Dio();
+    await api.patch('http://192.168.100.7:3000/tasks/$id');
+    newTasks();
+  }
+
+  void deleteTask(String id) async {
+    final api = Dio();
+    await api.delete('http://192.168.100.7:3000/tasks/$id');
   }
 }

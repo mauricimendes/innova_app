@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_theme/flutter_custom_theme.dart';
 import 'package:innova_app/pages/home.dart';
-import 'package:innova_app/pages/login.dart';
 import 'package:innova_app/theme/custom_theme.dart';
 import 'package:innova_app/theme/theme_notifier.dart';
 import 'package:provider/provider.dart';
@@ -36,10 +35,9 @@ class _MyAppState extends State<MyApp> {
         child: MaterialApp(
           title: 'Theme',
           debugShowCheckedModeBanner: false,
-          initialRoute: '/login',
+          initialRoute: '/home',
           routes: {
             '/home': (context) => const Home(),
-            '/login': (context) => const Login(),
           },
         ));
   }

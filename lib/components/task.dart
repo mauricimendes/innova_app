@@ -2,7 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:innova_app/theme/custom_theme.dart';
 
 class Task extends StatefulWidget {
-  const Task({super.key});
+  final String title;
+  final String description;
+  final String difficulty;
+  final VoidCallback handleCheckedTask;
+  final VoidCallback handleDeleteTask;
+  final bool checked;
+
+  const Task(
+      {super.key,
+      required this.title,
+      required this.checked,
+      required this.description,
+      required this.difficulty,
+      required this.handleCheckedTask,
+      required this.handleDeleteTask});
 
   @override
   State<Task> createState() => _TaskState();
@@ -13,10 +27,19 @@ class _TaskState extends State<Task> {
   bool _open = false;
   double _sizeTask = 62;
 
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      _checked = widget.checked;
+    });
+  }
+
   handleSetChecked() {
     setState(() {
       _checked = !_checked;
     });
+    widget.handleCheckedTask();
   }
 
   handleOpenTask() {
@@ -38,7 +61,6 @@ class _TaskState extends State<Task> {
     final theme = CustomTheme.of(context);
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
       child: Dismissible(
         background: Container(
           padding: const EdgeInsets.only(right: 16),
@@ -58,7 +80,7 @@ class _TaskState extends State<Task> {
           ),
         ),
         direction: DismissDirection.endToStart,
-        onDismissed: (direction) => {},
+        onDismissed: (direction) => {widget.handleDeleteTask()},
         key: Key(''),
         child: AnimatedContainer(
           decoration: BoxDecoration(
@@ -71,7 +93,7 @@ class _TaskState extends State<Task> {
             onDoubleTap: handleOpenTask,
             onLongPress: () => handleSetChecked(),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
@@ -97,14 +119,22 @@ class _TaskState extends State<Task> {
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                 ),
-                                child: const Text('lavar louças')),
+                                child: Text(widget.title)),
                           ]),
                       DefaultTextStyle(
                           style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
-                              color: theme.green),
-                          child: const Text('fácil'))
+                              color: widget.difficulty == 'easy'
+                                  ? theme.green
+                                  : widget.difficulty == 'medium'
+                                      ? theme.orange
+                                      : theme.red),
+                          child: Text(widget.difficulty == 'easy'
+                              ? 'Fácil'
+                              : widget.difficulty == 'medium'
+                                  ? 'Médio'
+                                  : 'Difícil'))
                     ],
                   ),
                 ),
@@ -114,8 +144,7 @@ class _TaskState extends State<Task> {
                     padding: const EdgeInsets.only(left: 16, top: 8, right: 16),
                     child: DefaultTextStyle(
                         style: TextStyle(color: theme.secondary),
-                        child: const Text(
-                            'Aqui vai um texto grande que vai ser a descrição da terafa que sera realizada.')),
+                        child: Text(widget.description)),
                   ),
                 )
               ],

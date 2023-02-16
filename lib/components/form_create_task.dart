@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:innova_app/components/filter.dart';
-import 'package:innova_app/components/filter_button.dart';
 import 'package:innova_app/components/input_app.dart';
 import 'package:innova_app/theme/custom_theme.dart';
 
-class FormCreateTask extends StatelessWidget {
+class FormCreateTask extends StatefulWidget {
   const FormCreateTask({super.key});
+
+  @override
+  State<FormCreateTask> createState() => _FormCreateTaskState();
+}
+
+class _FormCreateTaskState extends State<FormCreateTask> {
+  late String difficulty;
+
+  void handleChangeDifficulty(String value) {
+    setState(() {
+      difficulty = value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +56,11 @@ class FormCreateTask extends StatelessWidget {
             const SizedBox(
               height: 16,
             ),
-            const Filter(),
+            Filter(
+              handleChangeDifficulty: (difficulty) {
+                handleChangeDifficulty(difficulty);
+              },
+            ),
             const SizedBox(
               height: 16,
             ),

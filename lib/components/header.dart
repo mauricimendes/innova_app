@@ -35,21 +35,42 @@ class Header extends StatelessWidget {
                 fontSize: 16,
                 fontWeight: FontWeight.bold),
             child: const Text('Tarefas de hoje')),
-        Ink(
-          height: 52,
-          width: 52,
-          decoration: BoxDecoration(
-              color: theme.container, borderRadius: BorderRadius.circular(8)),
-          child: InkWell(
-            onTap: () {
-              Navigator.pushNamed(context, '/login');
-            },
-            borderRadius: BorderRadius.circular(8),
-            child: Icon(
-              Icons.logout,
-              color: theme.secondary,
+        Row(
+          children: [
+            Ink(
+              height: 52,
+              width: 52,
+              decoration: BoxDecoration(
+                  color: theme.container,
+                  borderRadius: BorderRadius.circular(8)),
+              child: InkWell(
+                onTap: () {},
+                borderRadius: BorderRadius.circular(8),
+                child: Icon(
+                  Icons.arrow_back_ios_new_rounded,
+                  color: theme.secondary,
+                ),
+              ),
             ),
-          ),
+            const SizedBox(
+              width: 8,
+            ),
+            Ink(
+              height: 52,
+              width: 52,
+              decoration: BoxDecoration(
+                  color: theme.container,
+                  borderRadius: BorderRadius.circular(8)),
+              child: InkWell(
+                onTap: () {},
+                borderRadius: BorderRadius.circular(8),
+                child: Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  color: theme.secondary,
+                ),
+              ),
+            ),
+          ],
         ),
       ],
     );
